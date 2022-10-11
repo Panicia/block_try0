@@ -1,37 +1,30 @@
-import '../Data/counter_repository.dart';
+import 'package:block_try0/Counter/Domain/counter_model_repository_interface.dart';
 import '../Presenter/Counter_bloc/counter_bloc.dart';
 import 'Models/counter_model.dart';
-import 'i_counter_model_interactor.dart';
 
-class CounterInteractor implements ICounterModelInteractor<CounterModel>{
-  final CounterRepository counterRepository;
-  late CounterModel? counterModel;
+class CounterInteractor {
+  final ICounterModelRepository counterRepository;
   CounterInteractor({required this.counterRepository});
 
   Future<CounterState> calculateNewState(CounterState state) async {
-    if(counterModel == null) {
-      await loadCounterModel();
-      if(counterModel?.counter == null) {
-        counterModel?.counter = 1;
-      } else {
-        counterModel?.counter = (counterModel?.counter)! + 1;
-      }
+    var counterModel = await loadCounterModel();
+    if(counterModel.counter > state.blopInt) {
+      counterModel.counter += 1;
     } else {
-      counterModel?.counter = (counterModel?.counter)! + 1;
+      counterModel.counter = state.blopInt + 1;
     }
-    saveModel(counterModel!);
+    saveModel(counterModel);
     CounterState newState = CounterState();
-    newState.blopInt = (counterModel?.counter)!;
+    newState.blopInt = counterModel.counter;
     return newState;
   }
 
-  @override
   Future<void> saveModel(counterModel) async {
     await counterRepository.saveModel(counterModel);
   }
 
-  Future<CounterModel?> loadCounterModel() async {
-    counterModel = await counterRepository.getCounterModel();
+  Future<CounterModel> loadCounterModel() async {
+    var counterModel = await counterRepository.loadModel();
     return counterModel;
   }
 }

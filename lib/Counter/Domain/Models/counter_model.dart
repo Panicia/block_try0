@@ -1,4 +1,4 @@
 class CounterModel {
- CounterModel({required this.counter});
- int? counter;
+ CounterModel({this.counter = 0});
+ int counter;
 }
