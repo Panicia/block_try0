@@ -11,6 +11,12 @@ class CounterWidget extends StatefulWidget {
 class _CounterWidgetState extends State<CounterWidget> {
 
   @override
+  void initState() {
+    super.initState();
+    context.read<CounterBloc>().add(InitComplete());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<CounterBloc, CounterState>(
       builder: (context, state) {

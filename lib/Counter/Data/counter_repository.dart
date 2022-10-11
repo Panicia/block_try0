@@ -25,6 +25,7 @@ class CounterRepository implements ICounterModelRepository<CounterModel>{
     var counterList = await databaseHelper.getCounterList();
     counterList.isEmpty
         ? databaseHelper.add(counterDto)
-        : databaseHelper.update(counterDto);
+        : { databaseHelper.remove(0), databaseHelper.add(counterDto) };
+        //: databaseHelper.update(counterDto);
   }
 }

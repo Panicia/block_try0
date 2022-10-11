@@ -45,6 +45,11 @@ class DatabaseHelper {
     return await db.insert('counter_table', counterDto.toMap());
   }
 
+  Future<int> remove(int id) async {
+    Database db = await instance.database;
+    return await db.delete('counter_table', where: 'id = ?', whereArgs: [id]);
+  }
+
   Future<int> update(CounterDto counterDto) async {
     Database db = await instance.database;
     return await db.update('counter_table', counterDto.toMap(), where: 'id = ?', whereArgs: [counterDto.id]);

@@ -6,6 +6,10 @@ class CounterInteractor {
   final ICounterModelRepository counterRepository;
   CounterInteractor({required this.counterRepository});
 
+  Future<CounterState> getState() async {
+    return CounterState(blopInt: (await loadCounterModel()).counter);
+  }
+
   Future<CounterState> calculateNewState(CounterState state) async {
     var counterModel = await loadCounterModel();
     if(counterModel.counter > state.blopInt) {
@@ -24,8 +28,7 @@ class CounterInteractor {
   }
 
   Future<CounterModel> loadCounterModel() async {
-    var counterModel = await counterRepository.loadModel();
-    return counterModel;
+    return await counterRepository.loadModel();
   }
 }
 

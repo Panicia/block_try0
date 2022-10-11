@@ -1,5 +1,5 @@
 class CounterDto {
-  CounterDto({this.id, required this.counter});
+  CounterDto({this.id = 0, required this.counter});
   int? id;
   int? counter;
 
