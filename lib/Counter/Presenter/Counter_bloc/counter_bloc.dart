@@ -13,19 +13,10 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
   }) : super(CounterState()) {
     on<CounterIncrementPressed>(_pressed);
   }
+
   Future<void> _pressed(CounterEvent e, Emitter emit) async {
     CounterState newState = CounterState();
-    newState.blopInt = state.blopInt + 1;
+    newState = await counterInteractor.calculateNewState(state);
     emit(newState);
-  }
-  @override
-  void onChange(Change<CounterState> change) {
-    super.onChange(change);
-    print(change);
-  }
-  @override
-  void onTransition(Transition<CounterEvent, CounterState> transition) {
-    super.onTransition(transition);
-    print(transition);
   }
 }
