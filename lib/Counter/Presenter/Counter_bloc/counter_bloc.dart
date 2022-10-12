@@ -10,18 +10,30 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
 
   CounterBloc({
     required this.counterInteractor
-  }) : super(CounterState()) {
-    on<CounterIncrementPressed>(_pressed);
-    on<InitComplete>(_getState);
+  }) : super(CounterState.emptyInstance()) {
+
+    on<CounterIncrementPressed>(_counterIncrementPressed);
+    on<CounterDecrementPressed>(_counterDecrementPressed);
+    on<CounterResetPressed>(_counterResetPressed);
+    on<InitComplete>(_getInitState);
   }
 
-  Future<void> _pressed(CounterEvent e, Emitter emit) async {
-    CounterState newState = CounterState();
-    newState = await counterInteractor.calculateNewState(state);
+  Future<void> _counterIncrementPressed(CounterEvent e, Emitter emit) async {
+    final newState = await counterInteractor.incrementState();
     emit(newState);
   }
 
-  Future<void> _getState(CounterEvent e, Emitter emit) async {
-    emit(await counterInteractor.getState());
+  Future<void> _counterDecrementPressed(CounterEvent e, Emitter emit) async {
+    final newState = await counterInteractor.decrementState();
+    emit(newState);
+  }
+
+  Future<void> _counterResetPressed(CounterEvent e, Emitter emit) async {
+    final newState = await counterInteractor.resetState();
+    emit(newState);
+  }
+
+  Future<void> _getInitState(CounterEvent e, Emitter emit) async {
+    emit(await counterInteractor.getInitState());
   }
 }

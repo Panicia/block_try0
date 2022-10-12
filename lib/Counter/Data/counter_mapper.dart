@@ -8,13 +8,13 @@ class CounterMapper {
  }
 
  CounterModel getEmptyModel() {
-   return CounterModel();
+   return CounterModel.empty();
  }
 
  CounterModel fromMap(CounterDto counterDto) {
    CounterModel counterModel;
    counterDto.counter == null
-       ? counterModel = CounterModel()
+       ? counterModel = CounterModel.empty()
        : counterModel = CounterModel(counter: counterDto.counter!);
    return counterModel;
  }

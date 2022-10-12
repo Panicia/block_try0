@@ -38,12 +38,14 @@ class CounterSqlStorage implements ICounterStorage {
   }
 
   @override
-  Future<void> addDto(CounterDto counterDto) async {
-    add(counterDto);
+  Future<void> upset(CounterDto counterDto) async {
+    var counterList = await getDtoList();
+    counterList.isEmpty
+        ? add(counterDto)
+        : removeAndAddDto(counterDto);
   }
 
-  @override
-  Future<void> updateDto(CounterDto counterDto) async {
+  Future<void> removeAndAddDto(CounterDto counterDto) async {
     await remove(counterDto.id!);
     await add(counterDto);
   }

@@ -13,19 +13,18 @@ class CounterRepository implements ICounterModelRepository<CounterModel>{
   @override
   Future<CounterModel> loadModel() async {
     var counterList = await counterStorage.getDtoList();
-    CounterModel counterModel;
-    counterList.isEmpty
-        ? counterModel = counterMapper.getEmptyModel()
-        : counterModel = counterMapper.fromMap(counterList[0]);
+    final CounterModel counterModel;
+    if(counterList.isEmpty) {
+      counterModel = counterMapper.getEmptyModel();
+    } else {
+      counterModel = counterMapper.fromMap(counterList[0]);
+    }
     return counterModel;
   }
 
   @override
   Future<void> saveModel(counterModel) async {
     CounterDto counterDto = counterMapper.map(counterModel);
-    var counterList = await counterStorage.getDtoList();
-    counterList.isEmpty
-        ? counterStorage.addDto(counterDto)
-        : counterStorage.updateDto(counterDto);
+    counterStorage.upset(counterDto);
   }
 }
