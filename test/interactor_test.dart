@@ -1,7 +1,6 @@
 import 'package:block_try0/Counter/Data/counter_repository.dart';
 import 'package:block_try0/Counter/Domain/Models/counter_model.dart';
 import 'package:block_try0/Counter/Domain/counter_interactor.dart';
-import 'package:block_try0/Counter/Presenter/Counter_bloc/counter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -49,8 +48,7 @@ void main() {
       counterModel = CounterModel.empty();
       expect((await counterInteractor.loadChangeAndSaveCounterModel(0)).counter, 0);
       expect((await counterInteractor.loadChangeAndSaveCounterModel(1)).counter, 1);
-      expect(
-          (await counterInteractor.loadChangeAndSaveCounterModel(-1)).counter, 0);
+      expect((await counterInteractor.loadChangeAndSaveCounterModel(-1)).counter, 0);
     });
 
     test('loadChangeAndSaveCounterModel_test', () async {
