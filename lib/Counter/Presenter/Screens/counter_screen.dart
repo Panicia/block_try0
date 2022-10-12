@@ -22,7 +22,7 @@ class _CounterScreenState extends State<CounterScreen> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: //loadedWidget(context),
+        child:
         BlocConsumer<CounterBloc, CounterState>(
           builder: (context, state) {
             if(!state.stateLoaded) {

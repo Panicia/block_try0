@@ -23,6 +23,13 @@ class _LoadingCircleState extends State<LoadingCircle>
     controller.repeat(reverse: false);
     super.initState();
   }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CircularProgressIndicator(
